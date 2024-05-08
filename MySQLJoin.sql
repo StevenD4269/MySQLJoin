@@ -8,11 +8,36 @@ ON products.CategoryID = categories.CategoryID
 WHERE categories.name = 'computers';  
 
 /* joins: find all product names, product prices, and products ratings that have a rating of 5 */
-SELECT products.name, products.price, reviews.rating FROM products INNER JOIN reviews ON products.ProductID = reviews.ProductID WHERE reviews.rating = 5;
+SELECT products.name AS 'Product Name', products.price, reviews.rating 
+FROM products 
+INNER JOIN reviews 
+ON products.ProductID = reviews.ProductID 
+WHERE reviews.rating = 5;
+
 /* joins: find the employee with the most total quantity sold.  use the sum() function and group by */
-SELECT * FROM employees INNER JOIN sales ON employees.EmployeeID = sales.EmployeeID GROUP BY sum(sales.quantity);  
+SELECT employees.EmployeeID, FirstName, LastName, sum(Quantity)
+FROM employees
+INNER JOIN sales
+ON employees.EmployeeID = sales.EmployeeID
+GROUP BY employees.EmployeeID
+HAVING sum(quantity) = (
+SELECT SUM(Quantity)
+From employees
+INNER JOIN sales
+ON employees.EmployeeID = sales.EmployeeID
+GROUP BY employees.EmployeeID
+ORDER BY SUM(Quantity) DESC
+LIMIT 1);  
+
 /* joins: find the name of the department, and the name of the category for Appliances and Games */
-SELECT departments.name, categories.name FROM categories INNER JOIN departments ON categories.DepartmentID = departments.DepartmentID WHERE categories.name IN('Appliances', 'Games');
+SELECT departments.name, categories.name 
+FROM categories 
+INNER JOIN departments 
+ON categories.DepartmentID = departments.DepartmentID 
+WHERE categories.name 
+IN('Appliances', 'Games');
+
+
 /* joins: find the product name, total # sold, and total price sold,
 
  for Eagles: Hotel California --You may need to use SUM() */
