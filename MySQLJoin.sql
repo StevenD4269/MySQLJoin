@@ -61,10 +61,11 @@ WHERE name LIKE '%Visio%TV%' AND rating = 1;
 /* Your goal is to write a query that serves as an employee sales report.
 
 This query should return the employeeID, the employee's first and last name, the name of each product, how many of that product they sold */
-SELECT employees.employeeID, FirstName, LastName, Name, Quantity
+SELECT employees.employeeID, FirstName, LastName, Name, SUM(Quantity)
 FROM employees
 INNER JOIN sales
 ON employees.EmployeeID = sales.EmployeeID
 INNER JOIN products
-ON products.ProductID = sales.ProductID;
+ON products.ProductID = sales.ProductID
+GROUP BY sales.EmployeeID, products.ProductID;
 
