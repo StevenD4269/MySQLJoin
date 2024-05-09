@@ -41,7 +41,12 @@ IN('Appliances', 'Games');
 /* joins: find the product name, total # sold, and total price sold,
 
  for Eagles: Hotel California --You may need to use SUM() */
-SELECT products.name, sum(sales.quantity), sum(products.price) FROM products INNER JOIN sales ON sales.ProductID = products.ProductID WHERE product.name= '%Eagles' GROUP BY products.name; 
+SELECT products.ProductID, products.name, SUM(Quantity), SUM(PricePerUnit * Quantity)  
+FROM products 
+INNER JOIN sales 
+ON sales.ProductID = products.ProductID 
+WHERE Name LIKE '%Eagles%Hotel%California%'
+GROUP BY products.ProductID; 
 
 
 /* joins: find Product name, reviewer name, rating, and comment on the Visio TV. (only return for the lowest rating!) */
